@@ -7,11 +7,13 @@ import * as helmet from 'helmet';
 import * as mongoose from 'mongoose';
 import * as logger from 'morgan';
 import { PostRouter } from './router/PostRouter';
+import { UserRouter } from './router/UserRouter';
 
 const postRouter = new PostRouter();
+const userRouter = new UserRouter();
 
 class Server {
-    // set app to be of type express.Application
+    // установка поля app типа express.Application
     public app: express.Application;
 
     constructor() {
@@ -20,11 +22,11 @@ class Server {
         this.routes();
     }
 
-    // application config
+    // конфигурация приложения
     public config(): void {
         const MONGO_URI: string = 'mongodb://192.168.99.100:27017/posts';
         mongoose.connect(MONGO_URI || process.env.MONGODB_URI);
-        // express middleware
+        // app связка
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(bodyParser.json());
         this.app.use(cookieParser());
@@ -36,7 +38,7 @@ class Server {
 
         // cors
         this.app.use((req, res, next) => {
-            res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+            res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
             res.header(
                 'Access-Control-Allow-Methods',
                 'GET, POST, PUT, DELETE, OPTIONS',
@@ -50,10 +52,11 @@ class Server {
         });
     }
 
-    // application routes
+    // установка маршрутов и обработчиков для app
     public routes(): void {
         const router: express.Router = express.Router();
         this.app.use('/api/v1/posts', postRouter.router);
+        this.app.use('/api/v1/users', userRouter.router);
     }
 }
 

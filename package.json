@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "TypeScript ERP system",
   "scripts": {
-    "start": "tsc && nodemon ./src/build/index.js && tsc -w",
-    "ts:watch": "tsc -w"
+    "start": "tsc && nodemon ./src/build/index.js"
   },
   "author": "Ivantsov Ilya",
   "license": "ISC",
