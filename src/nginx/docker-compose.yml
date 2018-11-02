@@ -1,0 +1,9 @@
+version: "2"
+services:
+  nginx:
+    image: openresty/openresty:stretch-fat
+    ports:
+    - "80:80"
+    volumes:
+    - ./conf.d/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+    - ./log/:/var/log/nginx/
