@@ -23,7 +23,7 @@ export class UserRouter {
   public one(req: Request, res: Response): void {
     const { username } = req.params;
 
-    User.findOne({ username }).populate('posts')
+    User.findOne({ username })//.populate('posts')
       .then((data) => {
         res.status(200).json({ data });
       })
@@ -33,11 +33,10 @@ export class UserRouter {
   }
 
   public create(req: Request, res: Response): void {
-    const { firstName, lastName, username, email, password } = req.body;
+    const { info, username, email, password } = req.body;
 
     const user = new User({
-      firstName,
-      lastName,
+      info,
       username,
       email,
       password,

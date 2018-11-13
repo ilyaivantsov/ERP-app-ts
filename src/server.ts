@@ -8,9 +8,11 @@ import * as mongoose from 'mongoose';
 import * as logger from 'morgan';
 import { PostRouter } from './router/PostRouter';
 import { UserRouter } from './router/UserRouter';
+import { ProductRouter } from './router/ProductRouter';
 
 const postRouter = new PostRouter();
 const userRouter = new UserRouter();
+const productRouter = new ProductRouter();
 
 class Server {
     // установка поля app типа express.Application
@@ -24,7 +26,7 @@ class Server {
 
     // конфигурация приложения
     public config(): void {
-        const MONGO_URI: string = 'mongodb://192.168.99.100:27017/posts';
+        const MONGO_URI: string = 'mongodb://192.168.99.100:27017/testcrm';
         mongoose.connect(MONGO_URI || process.env.MONGODB_URI);
         // app связка
         this.app.use(bodyParser.urlencoded({ extended: true }));
@@ -57,6 +59,7 @@ class Server {
         const router: express.Router = express.Router();
         this.app.use('/api/v1/posts', postRouter.router);
         this.app.use('/api/v1/users', userRouter.router);
+        this.app.use('/api/v1/product',productRouter.router);
     }
 }
 
